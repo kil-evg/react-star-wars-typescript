@@ -18,3 +18,10 @@ export interface Item {
     title: string,
     path: string
 }
+
+export interface Hero {
+        id: string,
+        name: string,
+        img: string,
+        url: string
+    }
