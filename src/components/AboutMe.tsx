@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import { base_url, period_month } from '../utils/constants'
 import { HeroInfo } from '../utils/types';
+import { useParams } from 'react-router-dom';
 
 const AboutMe = () => {
   const [hero, setHero] = useState<HeroInfo>();
+  const {heroId} =  useParams();
+  console.log(heroId);
 
   useEffect(() => {
     const hero = JSON.parse(localStorage.getItem('hero')!);
@@ -31,7 +34,8 @@ const AboutMe = () => {
           }))
         })
     }
-  }, [])
+    return () => console.log(`Component AboutMe was unmounted`)
+  }, [heroId])
 
   return (
     <>
