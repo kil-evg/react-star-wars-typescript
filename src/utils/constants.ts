@@ -12,7 +12,7 @@ import { Characters, Item } from './types'
 
 export const base_url = 'https://sw-info-api.herokuapp.com';
 export const version = '/v1';
-export const friends = [friend1, friend2, friend3, friend4, friend5, friend6, friend7, friend8, friend9];
+
 export const navItems: Item[] = [
     { title: 'Home', path: 'home' },
     { title: 'About me', path: 'about_me' },
@@ -76,4 +76,5 @@ export const characters: Characters = {
         url: `${base_url+version}/transports/10`
     }
 };
-export const defaultHero = 'luke';
+export const friends = Object.keys(characters);
+export const defaultHero = friends[0];
