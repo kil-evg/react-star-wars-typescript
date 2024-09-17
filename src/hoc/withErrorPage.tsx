@@ -1,19 +1,27 @@
-import { Component, useContext, useEffect } from "react";
-import ErrorPage from "../components/ErrorPage";
-import { characters, defaultHero } from "../utils/constants";
+import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { defaultHero, characters } from "../utils/constants";
 import { SWContext } from "../utils/context";
-//@ts-ignore
-export const withErrorPage = Component => props => {
-    const { heroId = defaultHero } = useParams();
-    const { changeHero } = useContext(SWContext);
+import ErrorPage from "../components/ErrorPage";
+
+interface WithErrorPageProps {
+    heroId: string;
+  }
+
+export const withErrorPage = <P extends object = {}>(Component: React.ComponentType<WithErrorPageProps>) => (props: P) => {
+    const { heroId = defaultHero } = useParams<{heroId: string}>();
+    const { changeHero, setError } = useContext(SWContext);
+    
 
     useEffect(() => {
-        if (!characters[heroId]) {
-            return
+        if (characters[heroId]) {
+            changeHero(heroId);
+            setError(false);
+        } else {
+            setError(true);
         }
-        changeHero(heroId);
+
     }, [heroId])
 
-    return characters[heroId] ? <Component heroId={heroId} {...props} /> : <ErrorPage />
+    return characters[heroId] ? <Component heroId={heroId} {...props}/> : <ErrorPage />
 }
